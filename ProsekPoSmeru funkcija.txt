@@ -1,0 +1,20 @@
+--za uneti smer vraca studente sa tog smera, godinu studija i njihove prosecne ocene
+
+CREATE FUNCTION ProsekPoSmeru (@smerId int)
+RETURNS TABLE 
+AS
+RETURN 
+(
+	SELECT S.IME+' '+S.PREZIME AS 'Student', 
+		   G.NAZIV AS 'Godina',
+		   AVG(I.OCENA*1.0) AS 'Prosecna ocena'
+	FROM SMER SM
+	JOIN STUDENT_SMER_GODINA SSG ON SM.ID=SSG.SMER_ID
+	JOIN STUDENT S ON S.ID=SSG.STUDENT_ID
+	JOIN GODINA G ON G.ID=SSG.GODINA_ID
+	JOIN ISPIT I ON I.STUDENT_ID=S.ID
+	WHERE SM.ID=@smerId
+	GROUP BY G.NAZIV, S.IME, S.PREZIME
+	
+)
+GO

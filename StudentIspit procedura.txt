@@ -1,0 +1,12 @@
+--vraca ispite koje e dati student polozio
+
+
+CREATE PROCEDURE PolozeniIspitiZaDatogStudenta (@studentId int)
+AS
+BEGIN
+	SELECT P.NAZIV FROM STUDENT S
+	JOIN ISPIT I ON I.STUDENT_ID=S.ID
+	JOIN PREDMET P ON P.ID=I.PREDMET_ID
+	WHERE S.ID=4
+END
+GO
